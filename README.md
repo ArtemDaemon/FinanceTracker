@@ -11,3 +11,4 @@
 - [ ] Money transfers / Переводы денег
 - [ ] Analysis / Аналитика
 - [ ] Debts / Долги
+- [ ] Transaction Templates / Шаблоны транзакций
