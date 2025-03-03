@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+// Полезное: https://go.dev/doc/articles/wiki/
+
 func main() {
 	http.HandleFunc("/main/", mainPage)
 	err := http.ListenAndServe(":8080", nil)
