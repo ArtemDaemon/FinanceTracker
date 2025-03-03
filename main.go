@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+	"text/template"
 )
 
 // Полезное: https://go.dev/doc/articles/wiki/
@@ -17,5 +17,8 @@ func main() {
 }
 
 func mainPage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Привет!")
+	t, _ := template.ParseFiles("html/nav_menu.html")
+
+	// Отправить HTML
+	t.Execute(w)
 }
