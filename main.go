@@ -6,9 +6,10 @@ import (
 	"text/template"
 )
 
-// Полезное: https://go.dev/doc/articles/wiki/
-
 func main() {
+	// Подцепляем изображения
+	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("html/img"))))
+
 	http.HandleFunc("/main/", mainPage)
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
@@ -19,6 +20,5 @@ func main() {
 func mainPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/nav_menu.html")
 
-	// Отправить HTML
-	t.Execute(w)
+	t.Execute(w, nil)
 }
