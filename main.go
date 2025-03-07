@@ -1,12 +1,15 @@
 package main
 
 import (
+	"finance/database"
 	"log"
 	"net/http"
 	"text/template"
 )
 
 func main() {
+	database.Connect()
+
 	// Подцепляем изображения
 	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("html/img"))))
 
