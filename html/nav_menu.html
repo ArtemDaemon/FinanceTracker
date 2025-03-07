@@ -20,6 +20,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        cursor: pointer;
     }
     .nav-menu-item-icon {
         width: 1.5vw;
@@ -28,7 +29,7 @@
     .nav-menu-item-label {
         padding-left: 1vw;
     }
-    .nav-menu-item-selected {
+    .nav-menu-item:hover {
         background-color: #eeeeee;
     }
     .body-container {
@@ -39,12 +40,12 @@
 </style>
 <div class="container">
     <div class="nav-menu">
-        <div class="nav-menu-item nav-menu-item-selected">
-            <img class="nav-menu-item-icon" src="img/histogram.png">
+        <div class="nav-menu-item">
+            <img class="nav-menu-item-icon" src="/img/histogram.png">
             <span class="nav-menu-item-label">Главная</span>
         </div>
         <div class="nav-menu-item">
-            <img class="nav-menu-item-icon" src="img/transaction.png">
+            <img class="nav-menu-item-icon" src="/img/transaction.png">
             <span class="nav-menu-item-label">Транзакции</span>
         </div>
     </div>
