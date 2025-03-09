@@ -2,14 +2,22 @@ package database
 
 import (
 	"database/sql"
+	"log"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
-func Connect() {
-	db, err := sql.Open("sqlite3", "finances.db")
+var DB *sql.DB
+
+func InitDB() {
+	DB, err := sql.Open("sqlite", "finances.db")
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-	defer db.Close()
+
+	DB.SetMaxOpenConns(1)
+
+	if err = DB.Ping(); err != nil {
+		log.Fatal(err)
+	}
 }

@@ -8,16 +8,14 @@ import (
 )
 
 func main() {
-	database.Connect()
+	database.InitDB()
+	defer database.DB.Close()
 
 	// Подцепляем изображения
 	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("html/img"))))
 
 	http.HandleFunc("/main/", mainPage)
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
-	}
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func mainPage(w http.ResponseWriter, r *http.Request) {
