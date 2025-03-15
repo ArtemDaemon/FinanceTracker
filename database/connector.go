@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 
@@ -17,6 +18,7 @@ func InitDB() {
 		log.Fatal(err)
 	}
 
+	fmt.Println("Соединение с базой данных установлено")
 	DB.SetMaxOpenConns(1)
 
 	if err = DB.Ping(); err != nil {
@@ -27,6 +29,7 @@ func InitDB() {
 	if err != nil {
 		log.Fatal("Ошибка при инициализации структуры БД:", err)
 	}
+	fmt.Println("Структура данных инициализирована")
 }
 
 func runInitSQL() error {
