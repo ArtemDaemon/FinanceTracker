@@ -1,7 +1,8 @@
 package main
 
 import (
-	"finance/database"
+	"finance/internal/database"
+	"finance/internal/utils"
 	"fmt"
 	"log"
 	"net/http"
@@ -11,7 +12,7 @@ import (
 )
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data map[string]interface{}) {
-	tmpls, err := template.ParseFiles("html/layout.html", "html/"+tmpl+".html")
+	tmpls, err := template.ParseFiles("web/templates/layout.html", "web/templates/"+tmpl+".html")
 	if err != nil {
 		http.Error(w, "Ошибка загрузки шаблона", http.StatusInternalServerError)
 		return
@@ -28,13 +29,13 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 
 	data := map[string]interface{}{
 		"Title":               "Главная",
-		"StartBalance":        FormatCurrency(balanceInfo.StartBalance),
-		"TotalIncome":         FormatCurrency(balanceInfo.TotalIncome),
-		"TotalExpense":        FormatCurrency(balanceInfo.TotalExpense),
-		"BalanceDelta":        FormatCurrency(balanceInfo.BalanceDelta),
-		"BalanceDeltaColor":   GetColorClass(balanceInfo.BalanceDelta),
-		"CurrentBalance":      FormatCurrency(balanceInfo.CurrentBalance),
-		"CurrentBalanceColor": GetColorClass(balanceInfo.CurrentBalance),
+		"StartBalance":        utils.FormatCurrency(balanceInfo.StartBalance),
+		"TotalIncome":         utils.FormatCurrency(balanceInfo.TotalIncome),
+		"TotalExpense":        utils.FormatCurrency(balanceInfo.TotalExpense),
+		"BalanceDelta":        utils.FormatCurrency(balanceInfo.BalanceDelta),
+		"BalanceDeltaColor":   utils.GetColorClass(balanceInfo.BalanceDelta),
+		"CurrentBalance":      utils.FormatCurrency(balanceInfo.CurrentBalance),
+		"CurrentBalanceColor": utils.GetColorClass(balanceInfo.CurrentBalance),
 	}
 	renderTemplate(w, "main", data)
 }
@@ -70,7 +71,7 @@ func main() {
 	defer database.DB.Close()
 
 	// Подцепляем изображения
-	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("html/img"))))
+	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("web/static/img"))))
 
 	http.HandleFunc("/main/", mainPage)
 	http.HandleFunc("/transactions/", transactionsPage)

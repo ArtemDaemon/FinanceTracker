@@ -6,18 +6,12 @@ import (
 	"log"
 	"os"
 
+	"finance/internal/models"
+
 	_ "modernc.org/sqlite"
 )
 
 var DB *sql.DB
-
-type BalanceInfo struct {
-	StartBalance   float64
-	TotalIncome    float64
-	TotalExpense   float64
-	BalanceDelta   float64
-	CurrentBalance float64
-}
 
 func InitDB() {
 	var err error
@@ -41,7 +35,7 @@ func InitDB() {
 }
 
 func runInitSQL() error {
-	initSQL, err := os.ReadFile("database/sql/init.sql")
+	initSQL, err := os.ReadFile("internal/database/sql/init.sql")
 	if err != nil {
 		return err
 	}
@@ -50,14 +44,14 @@ func runInitSQL() error {
 	return err
 }
 
-func GetTotalBalance() (BalanceInfo, error) {
-	query, err := os.ReadFile("database/sql/get_total_balance.sql")
+func GetTotalBalance() (models.BalanceInfo, error) {
+	query, err := os.ReadFile("internal/database/sql/get_total_balance.sql")
 	if err != nil {
-		return BalanceInfo{}, err
+		return models.BalanceInfo{}, err
 	}
 
 	row := DB.QueryRow(string(query))
-	var info BalanceInfo
+	var info models.BalanceInfo
 	err = row.Scan(
 		&info.StartBalance,
 		&info.TotalIncome,
@@ -66,7 +60,7 @@ func GetTotalBalance() (BalanceInfo, error) {
 		&info.CurrentBalance,
 	)
 	if err != nil {
-		return BalanceInfo{}, err
+		return models.BalanceInfo{}, err
 	}
 	return info, nil
 }
