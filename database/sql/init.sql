@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS config (
 
 INSERT OR IGNORE INTO config (key, value) VALUES ('start_balance', '0');
 
-CREATE TABLE transactions (
+CREATE TABLE IF NOT EXISTS transactions (
 	transaction_id	INTEGER NOT NULL UNIQUE,
 	category_id	INTEGER NOT NULL,
 	amount	REAL NOT NULL DEFAULT 0,
