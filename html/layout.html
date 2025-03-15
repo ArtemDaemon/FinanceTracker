@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }}</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        nav {
+            width: 200px;
+            background: white;
+            height: 100%;
+            padding-top:5vw;
+            display: flex;
+            flex-direction: column;
+        }
+        .nav-menu-item {
+            padding: 1vw;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: black;
+        }
+        .nav-menu-item-icon {
+            width: 1.5vw;
+            height: 1.5vw;
+        }
+        .nav-menu-item-label {
+            padding-left: 1vw;
+        }
+        .nav-menu-item:hover {
+            background-color: #eeeeee;
+        }
+        main {
+            flex-grow: 1;
+            padding: 10px;
+            background-color: #eeeeee;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/main" class="nav-menu-item">
+            <img class="nav-menu-item-icon" src="/img/histogram.png">
+            <span class="nav-menu-item-label">Главная</span>
+        </a>
+        <a href="/transactions" class="nav-menu-item">
+            <img class="nav-menu-item-icon" src="/img/transaction.png">
+            <span class="nav-menu-item-label">Транзакции</span>
+        </a>
+    </nav>
+    <main>
+        {{ block "content" . }}{{ end }}
+    </main>
+</body>
+</html>
