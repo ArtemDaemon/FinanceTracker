@@ -1,3 +1,30 @@
 {{ define "content" }}
-<h1>Баланс: {{ .TotalBalance}}</h1>
+<div class="card balance">
+    <div class="title">
+        Текущий баланс
+    </div>
+    <div class="balance-rows-container">
+        <div class="balance-row">
+            <span class="row-title">Изначальная сумма</span>
+            <span class="value color-green">{{ .StartBalance}}</span>
+        </div>
+        <div class="balance-row">
+            <span class="row-title">Доходы</span>
+            <span class="value color-green">{{ .TotalIncome}}</span>
+        </div>
+        <div class="balance-row">
+            <span class="row-title">Расходы</span>
+            <span class="value color-red">{{ .TotalExpense}}</span>
+        </div>
+        <div class="balance-row">
+            <span class="row-title">Выручка</span>
+            <span class="value {{ .BalanceDeltaColor}}">{{ .BalanceDelta}}</span>
+        </div>
+        <hr class="solid">
+        <div class="balance-row">
+            <span class="row-title">Теукщий баланс</span>
+            <span class="value {{ .CurrentBalanceColor}}">{{ .CurrentBalance}}</span>
+        </div>
+    </div>
+</div>
 {{ end }}
