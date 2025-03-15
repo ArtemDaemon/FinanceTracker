@@ -21,8 +21,14 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data map[string]interfac
 }
 
 func mainPage(w http.ResponseWriter, r *http.Request) {
+	totalBalance, err := database.GetTotalBalance()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	data := map[string]interface{}{
-		"Title": "Главная",
+		"Title":        "Главная",
+		"TotalBalance": totalBalance,
 	}
 	renderTemplate(w, "main", data)
 }
