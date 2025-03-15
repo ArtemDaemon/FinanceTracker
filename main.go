@@ -2,8 +2,11 @@ package main
 
 import (
 	"finance/database"
+	"fmt"
 	"log"
 	"net/http"
+	"os/exec"
+	"runtime"
 	"text/template"
 )
 
@@ -31,6 +34,25 @@ func transactionsPage(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "transactions", data)
 }
 
+func openBrowser(url string) {
+	var err error
+
+	switch runtime.GOOS {
+	case "linux":
+		err = exec.Command("xdg-open", url).Start()
+	case "windows":
+		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+	case "darwin":
+		err = exec.Command("open", url).Start()
+	default:
+		err = fmt.Errorf("unsupported platform")
+	}
+
+	if err != nil {
+		log.Println("Не удалось открыть браузер:", err)
+	}
+}
+
 func main() {
 	database.InitDB()
 	defer database.DB.Close()
@@ -40,5 +62,12 @@ func main() {
 
 	http.HandleFunc("/main/", mainPage)
 	http.HandleFunc("/transactions/", transactionsPage)
+
+	url := "http://localhost:8080/main"
+	go func() {
+		openBrowser(url)
+	}()
+	fmt.Println("Сервер запущен на", url)
+
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
