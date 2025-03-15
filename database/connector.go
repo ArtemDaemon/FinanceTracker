@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 
@@ -10,6 +11,14 @@ import (
 
 var DB *sql.DB
 
+type BalanceInfo struct {
+	StartBalance   float64
+	TotalIncome    float64
+	TotalExpense   float64
+	BalanceDelta   float64
+	CurrentBalance float64
+}
+
 func InitDB() {
 	var err error
 	DB, err = sql.Open("sqlite", "finances.db")
@@ -17,6 +26,7 @@ func InitDB() {
 		log.Fatal(err)
 	}
 
+	fmt.Println("Соединение с базой данных установлено")
 	DB.SetMaxOpenConns(1)
 
 	if err = DB.Ping(); err != nil {
@@ -27,6 +37,7 @@ func InitDB() {
 	if err != nil {
 		log.Fatal("Ошибка при инициализации структуры БД:", err)
 	}
+	fmt.Println("Структура данных инициализирована")
 }
 
 func runInitSQL() error {
@@ -39,17 +50,23 @@ func runInitSQL() error {
 	return err
 }
 
-func GetTotalBalance() (float64, error) {
+func GetTotalBalance() (BalanceInfo, error) {
 	query, err := os.ReadFile("database/sql/get_total_balance.sql")
 	if err != nil {
-		return 0, err
+		return BalanceInfo{}, err
 	}
 
 	row := DB.QueryRow(string(query))
-	var balance float64
-	err = row.Scan(&balance)
+	var info BalanceInfo
+	err = row.Scan(
+		&info.StartBalance,
+		&info.TotalIncome,
+		&info.TotalExpense,
+		&info.BalanceDelta,
+		&info.CurrentBalance,
+	)
 	if err != nil {
-		return 0, err
+		return BalanceInfo{}, err
 	}
-	return balance, nil
+	return info, nil
 }

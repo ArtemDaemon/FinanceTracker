@@ -42,10 +42,46 @@
         .nav-menu-item:hover {
             background-color: #eeeeee;
         }
+        hr.solid {
+           border-top: 1px solid rgb(247, 247, 247);
+           width: 100%;
+        }
         main {
             flex-grow: 1;
             padding: 10px;
             background-color: #eeeeee;
+        }
+        main .card {
+            background-color: white;
+            padding: 15px;
+            font-size: 13px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+        main .card .title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        main .balance {
+            width: 300px;
+        }
+        main .balance .balance-rows-container {
+            display: flex;
+            flex-direction: column;
+        }
+        main .balance .balance-rows-container .balance-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        main .balance .balance-rows-container .balance-row .row-title {
+            white-space: nowrap;
+        }
+        main .color-green {
+            color: green;
+        }
+        main .color-red {
+            color: red;
         }
     </style>
 </head>

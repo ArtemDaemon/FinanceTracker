@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS categories (
-	category_id	INTEGER NOT NULL UNIQUE,
-	category_name	TEXT NOT NULL,
-	PRIMARY KEY(category_id AUTOINCREMENT)
+	category_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	category_name TEXT NOT NULL UNIQUE
 );
 
 INSERT OR IGNORE INTO categories (category_name) 
@@ -15,7 +14,7 @@ CREATE TABLE IF NOT EXISTS config (
 
 INSERT OR IGNORE INTO config (key, value) VALUES ('start_balance', '0');
 
-CREATE TABLE transactions (
+CREATE TABLE IF NOT EXISTS transactions (
 	transaction_id	INTEGER NOT NULL UNIQUE,
 	category_id	INTEGER NOT NULL,
 	amount	REAL NOT NULL DEFAULT 0,
