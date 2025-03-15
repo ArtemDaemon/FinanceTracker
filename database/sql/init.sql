@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS categories (
-	category_id	INTEGER NOT NULL UNIQUE,
-	category_name	TEXT NOT NULL,
-	PRIMARY KEY(category_id AUTOINCREMENT)
+	category_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	category_name TEXT NOT NULL UNIQUE
 );
 
 INSERT OR IGNORE INTO categories (category_name) 
