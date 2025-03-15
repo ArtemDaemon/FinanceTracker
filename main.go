@@ -21,14 +21,20 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data map[string]interfac
 }
 
 func mainPage(w http.ResponseWriter, r *http.Request) {
-	totalBalance, err := database.GetTotalBalance()
+	balanceInfo, err := database.GetTotalBalance()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	data := map[string]interface{}{
-		"Title":        "Главная",
-		"TotalBalance": totalBalance,
+		"Title":               "Главная",
+		"StartBalance":        FormatCurrency(balanceInfo.StartBalance),
+		"TotalIncome":         FormatCurrency(balanceInfo.TotalIncome),
+		"TotalExpense":        FormatCurrency(balanceInfo.TotalExpense),
+		"BalanceDelta":        FormatCurrency(balanceInfo.BalanceDelta),
+		"BalanceDeltaColor":   GetColorClass(balanceInfo.BalanceDelta),
+		"CurrentBalance":      FormatCurrency(balanceInfo.CurrentBalance),
+		"CurrentBalanceColor": GetColorClass(balanceInfo.CurrentBalance),
 	}
 	renderTemplate(w, "main", data)
 }
