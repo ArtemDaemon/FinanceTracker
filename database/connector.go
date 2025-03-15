@@ -22,6 +22,21 @@ func InitDB() {
 	if err = DB.Ping(); err != nil {
 		log.Fatal(err)
 	}
+
+	err = runInitSQL()
+	if err != nil {
+		log.Fatal("Ошибка при инициализации структуры БД:", err)
+	}
+}
+
+func runInitSQL() error {
+	initSQL, err := os.ReadFile("database/sql/init.sql")
+	if err != nil {
+		return err
+	}
+
+	_, err = DB.Exec(string(initSQL))
+	return err
 }
 
 func GetTotalBalance() (float64, error) {
